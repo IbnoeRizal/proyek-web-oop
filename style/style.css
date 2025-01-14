@@ -1,0 +1,67 @@
+* {
+
+    width: auto;
+    margin: 0;
+
+}
+:root {
+    --header-bgcolor: yellow;
+    --main-bgcolor: orange;
+    --aside-bgcolor:green;
+    --footer-bgcolor:purple;
+    --font-size: 16px;
+}
+body{
+    display: grid;
+    grid-template-areas:
+     "header header header"
+     "main main main"
+     "footer footer footer";
+}
+header{
+    grid-area: header;
+    background-color: var(--header-bgcolor);
+    height: 100px;
+}
+main{
+    grid-area: main;
+    height: auto;
+    background-color: var(--main-bgcolor);
+    display: inherit;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: "aside section";
+}
+div .main{
+    grid-area: section;
+    display: flex;
+    flex-direction: column;
+}
+div.main>section,
+div.main>section>fieldset
+{  
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0 20px;
+
+}
+aside{
+    grid-area: aside;
+    position: sticky;
+    top: 0;
+    min-width: 200px;
+    height: 100vh;
+    background-color: var(--aside-bgcolor);
+}
+footer{
+    grid-area: footer;
+    background-color: var(--footer-bgcolor);
+    height: 100px;
+}
+form{
+    flex-grow: 1;
+    display: flex;
+    width: auto;
+    flex-direction: column;
+}
