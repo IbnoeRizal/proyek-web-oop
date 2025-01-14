@@ -78,4 +78,16 @@ class User{
         }
         $this->sandi = $validatedSandi;
     }
+
+    public function getNama(): string{
+        return $this->nama;
+    }
+
+    public function getAkun(): string{
+        return $this->akun;
+    }
+    
+    public function getSandi(): string{
+        return $this->sandi;
+    }
 }
