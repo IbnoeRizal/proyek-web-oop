@@ -20,11 +20,12 @@ class User{
         $namePatern = "/^[a-zA-Z]+$/";
         $nama = trim($nama);
         if (empty($nama)) {
-           return null;
+            return null;
         }
         if (!preg_match($namePatern, $nama)){
-          return null;
+            return null;
         }
+        $nama = strtolower($nama);
         return $nama;
     }
     
@@ -48,7 +49,7 @@ class User{
         return password_hash($sandi,PASSWORD_DEFAULT);
     }
 
-    public function validateOBJ() : bool {
+    private function validateOBJ() : bool {
         if ($this->nama && $this->sandi &&$this->akun) {
             return true;
         }
