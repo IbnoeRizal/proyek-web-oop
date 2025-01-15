@@ -5,7 +5,7 @@ class Dbh
     private $host= "localhost";
     private $pwd = "";
     private $usrName = "root";
-    private $dbName = "Mahasiswa";
+    private $dbName = "mahasiswa";
     private $option = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_CASE => PDO::CASE_NATURAL,
