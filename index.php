@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Login</title>
    <!-- <link rel="stylesheet" href="style/style.css"> -->
+    <style>a{display: block;}</style>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                         <input type="email" name="input ke 2" id="input ke 2" placeholder="Masukkan Email" autocomplete="off">
                         <label for="input ke 3">Sandi</label>
                         <input type="password" name="input ke 3" id="input ke 3" placeholder="Password" autocomplete="off" >
-                        <button type="submit">Submit</button>
+                        <button type="submit">submit</button>
                     </form>
                 </fieldset>
             </section>

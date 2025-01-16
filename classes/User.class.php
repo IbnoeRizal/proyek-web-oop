@@ -9,10 +9,6 @@ class User{
         $this->nama = $this->validateNama($nama);
         $this->akun = $this->validateAkun($akun);
         $this->sandi = $this->validateSandi($sandi);
-
-        if (!$this->validateOBJ()) {
-            throw new Exception("Data tidak valid");
-        }
        
     }
 
@@ -20,10 +16,10 @@ class User{
         $namePatern = "/^[a-zA-Z]+$/";
         $nama = trim($nama);
         if (empty($nama)) {
-            return null;
+            throw new Exception("Nama tidak valid");
         }
         if (!preg_match($namePatern, $nama)){
-            return null;
+            throw new Exception("Nama tidak valid");
         }
         $nama = strtolower($nama);
         return $nama;
@@ -33,10 +29,10 @@ class User{
         $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
         $akun = trim($akun);
         if (!preg_match($pattern, $akun)){
-            return null;
+            throw new Exception("Akun tidak valid");
         }
         if(!filter_var($akun,FILTER_VALIDATE_EMAIL)){
-            return null;
+            throw new Exception("Akun tidak valid");
         }
         return $akun;
     }
@@ -44,40 +40,21 @@ class User{
     private function validateSandi ($sandi) : string {
         $sandi = trim($sandi);
         if (empty($sandi)){
-            return null;
+            throw new Exception("Sandi tidak valid");
         }
-        return password_hash($sandi,PASSWORD_DEFAULT);
-    }
-
-    private function validateOBJ() : bool {
-        if ($this->nama && $this->sandi &&$this->akun) {
-            return true;
-        }
-        return false;
+        return $sandi;
     }
 
     public function setNama($nama) : void {
-        $validatedNama = $this->validateNama($nama);
-        if ($validatedNama === null) {
-            throw new Exception("Nama tidak valid");
-        }
-        $this->nama = $validatedNama;
+        $this->nama  = $this->validateNama($nama);
     }
 
     public function setAkun($akun) : void {
-        $validatedAkun = $this->validateAkun($akun);
-        if ($validatedAkun === null) {
-            throw new Exception("Akun tidak valid");
-        }
-        $this->akun = $validatedAkun;
+        $this->akun = $this->validateAkun($akun);
     }
 
     public function setSandi($sandi) :void {
-        $validatedSandi = $this->validateSandi($sandi);
-        if ($validatedSandi === null) {
-            throw new Exception("Sandi tidak valid");
-        }
-        $this->sandi = $validatedSandi;
+        $this->sandi = $this->validateSandi($sandi);
     }
 
     public function getNama(): string{

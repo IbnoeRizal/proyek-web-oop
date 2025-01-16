@@ -1,5 +1,5 @@
 <?php 
-require_once "../include/autoload.inc.php";
+include_once __DIR__."/../include/autoload.inc.php";
 
 final class Userctrl extends Dbh
 {
@@ -10,25 +10,28 @@ final class Userctrl extends Dbh
         $this->user = new User($name,$email,$pwd);
     }
 
-    public function cekValidObjData() : bool {
+    public function cekValidObjData() : int {
         $koneksi = self::connection();
-        $stm = "SELECT count(akun) as jumlah FROM pengguna WHERE akun = ? AND sandi = ?";
-        $koneksi->prepare($stm);
-        $koneksi->execute([$this->user->getAkun(),$this->user->getSandi()]);
-        $result = $koneksi->fetchColumn();
-        if (!$result['jumlah']>0) {
-            return false;
+        $stm = "SELECT sandi FROM pengguna WHERE akun = ?";
+        $stmt = $koneksi->prepare($stm);
+        $stmt->execute([$this->user->getAkun()]);
+        $result = $stmt->fetch();
+        if (!$result) {
+            return 0;
         }
-        return true;
+        if (!password_verify($this->user->getSandi(),$result["sandi"])) {
+            return -1;
+        }
+        return 1;
     }
 
     public function insertData () : bool {
-        if (!$this->cekValidObjData()) {
-            $dataarr = [$this->user->getNama(),$this->user->getAkun(),$this->user->getSandi()];
+        if ($this->cekValidObjData()<=0) {
+            $dataarr = [$this->user->getNama(),$this->user->getAkun(),password_hash($this->user->getSandi(),PASSWORD_DEFAULT)];
             $koneksi = self::connection();
             $stm = "INSERT INTO pengguna (nama,akun,sandi) VALUES (?, ?, ?)";
-            $koneksi->prepare($stm);
-            $koneksi->execute($dataarr);
+            $stmt = $koneksi->prepare($stm);
+            $stmt->execute($dataarr);
             return true;
         }   
         return false;

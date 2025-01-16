@@ -2,10 +2,12 @@
 spl_autoload_register('pathfunct');
 
 function pathfunct($kelas){
-    $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $uri = $_SERVER['REQUEST_URI'] ?? '';
+    $url = $host . $uri;
     
     $path= "classes/";
-    $extension= ".php";
+    $extension= ".class.php";
     if(strpos($url,'include')){
         $path = "../classes/";
     }else if(strpos($url,'classes')){
